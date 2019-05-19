@@ -19,8 +19,7 @@ const dbSettings = (seedDir, connection) => ({
   },
   useNullAsDefault: true,
   migrations: {
-    directory: './data/migrations',
-    tableName: 'dbmigrations'
+    directory: './data/migrations'
   },
   seeds: {
     directory: `./data/seeds/${seedDir}`
