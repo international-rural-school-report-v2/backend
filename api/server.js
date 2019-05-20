@@ -5,6 +5,7 @@ const cors = require('cors');
 const server = express();
 
 const authRt = require('./auth/router');
+const publicRt = require('./public/router');
 
 server.use(helmet());
 server.use(express.json());
@@ -15,5 +16,6 @@ server.get('/', (req, res) => {
 });
 
 server.use('/auth', authRt);
+server.use('/public', publicRt);
 
 module.exports = server;
