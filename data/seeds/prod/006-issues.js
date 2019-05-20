@@ -35,6 +35,14 @@ exports.seed = function(knex, Promise) {
           created_by: 5,
           updated_by: 5,
         },
+        {
+          name: 'Issue 5',
+          comments: 'Description here',
+          org_id: 2,
+          status_id: 1,
+          created_by: 3,
+          updated_by: 3,
+        },
       ]);
     });
 };
