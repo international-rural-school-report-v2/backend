@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 exports.seed = function(knex, Promise) {
-  return knex.raw('TRUNCATE TABLE user_org_roles CASCADE')
+  return knex.raw('TRUNCATE TABLE user_org_roles RESTART IDENTITY CASCADE')
     .then(function () {
       return knex('user_org_roles').insert([
         // User1
