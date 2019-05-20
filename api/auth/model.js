@@ -20,6 +20,6 @@ async function register(user) {
   const created = await Users.postEntry(tblUsers);
   const user_id = created[0].id;
   const tblUOR = { user_id, org_id, role_id }
-  const res = await UOR.postEntry(tblUOR);
-  return created;
+  await UOR.postEntry(tblUOR);
+  return created[0];
 }

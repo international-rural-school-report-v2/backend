@@ -29,7 +29,6 @@ router.post('/register', (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 12);
   user.password = hash;
-  
   db.register(user)
     .then(async created => {
       const token = await genToken(created);
