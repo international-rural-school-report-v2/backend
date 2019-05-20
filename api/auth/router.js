@@ -30,16 +30,16 @@ router.post('/register', (req, res) => {
   const hash = bcrypt.hashSync(user.password, 12);
   user.password = hash;
   db.register(user)
-    .then(async created => {
-      const token = await genToken(created);
-      const org_roles = await grabOrgRoles(created[0].id);
-      res.status(201).json({token, org_roles});
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: 'Could not create the new user.'
-      });
+  .then(async created => {
+    const token = await genToken(created);
+    const org_roles = await grabOrgRoles(created.id);
+    res.status(201).json({token, org_roles});
+  })
+  .catch(err => {
+    res.status(500).json({
+      error: 'Could not create the new user.'
     });
+  });
 })
 
 module.exports = router;
