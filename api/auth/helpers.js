@@ -17,7 +17,7 @@ async function genToken(user, org_roles) {
   }
   const jwtSecret = process.env.JWT_SECRET;
   const opt = {
-    expiresIn: '2hr',
+    expiresIn: '7d',
   }
   return jwt.sign(pyld, jwtSecret, opt)
 }
