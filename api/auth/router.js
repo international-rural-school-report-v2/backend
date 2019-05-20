@@ -33,7 +33,8 @@ router.post('/register', (req, res) => {
   db.register(user)
   .then(async created => {
     const token = await genToken(created);
-    const org_roles = await grabOrgRoles(created.id);
+    const grabbed = await grabOrgRoles(created.id);
+    const org_roles = formatOrgRoles(grabbed);
     res.status(201).json({token, org_roles});
   })
   .catch(err => {
