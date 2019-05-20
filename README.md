@@ -31,13 +31,13 @@ If successful, will return with a '201' HTTP status and an object with this form
 Expects an object with this format:
 ```
 {
-	"username": "User1",    // required
-	"password": "password", // required
-	"name": "TEST",         // required
-	"role_id": 2,           // required
-	"org_id": 2,            // required
-  "email": "foo@bar.com,  // required
-  "phone": "555-555-5555" // required
+	"username": "User1",    // required/string/unique
+	"password": "password", // required/string
+	"name": "TEST",         // required/string
+	"role_id": 2,           // required/number
+	"org_id": 2,            // required/number
+  "email": "foo@bar.com,  // optional/string/unique
+  "phone": "555-555-5555" // optional/string/unique
 }
 ```
 If successful, will return with a '201' HTTP status and an object with this format:
