@@ -13,7 +13,7 @@ const pgDev = localPG(process.env.DB_DEV);
 const dbSettings = (seedDir, connection) => ({
   client: 'pg',
   connection,
-  debug: true,
+  debug: seedDir === 'dev',
   pool: {
     min: 2,
     max: 10

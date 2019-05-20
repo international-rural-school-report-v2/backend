@@ -3,11 +3,9 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return knex('orgs').insert([
         {
-          id: 1,
           name: 'Organization One'
         },
         {
-          id: 2,
           name: 'Organization Two'
         }
       ]);
