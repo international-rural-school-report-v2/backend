@@ -3,9 +3,11 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 const server = express();
+const {auth} = require('./middleware');
 
 const authRt = require('./auth/router');
 const publicRt = require('./public/router');
+const issuesRt = require('./issues/router');
 
 server.use(helmet());
 server.use(express.json());
@@ -17,5 +19,6 @@ server.get('/', (req, res) => {
 
 server.use('/auth', authRt);
 server.use('/public', publicRt);
+server.use('/issues', auth, issuesRt);
 
 module.exports = server;
