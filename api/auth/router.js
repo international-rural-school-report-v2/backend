@@ -2,15 +2,16 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
 const db = require('./model');
-const {grabOrgRoles, genToken} = require('./helpers');
+const {genToken, grabOrgRoles, formatOrgRoles} = require('./helpers');
 
 router.post('/login', (req, res) => {
   let { username, password } = req.body;
   db.login({username})
     .then(async user => {
       if (user && bcrypt.compareSync(password, user.password)) {
-        const token = await genToken(user);
-        const org_roles = await grabOrgRoles(user.id)
+        const grabbed = await grabOrgRoles(user.id);
+        const org_roles = formatOrgRoles(grabbed);
+        const token = await genToken(user, org_roles);
         res.status(201).json({token, org_roles});
       } else {
         res.status(401).json({
