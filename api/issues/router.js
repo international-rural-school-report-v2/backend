@@ -16,8 +16,8 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   let issue = req.body;
-  const {subject} = req.decoded;
-  const {org_id} = org_roles[0].org_roles;
+  const {subject, org_roles} = req.decoded;
+  const {org_id} = org_roles[0];
   return db.postIssue(issue, subject, org_id)
     .then(issues => {
       res.status(200).json(issues);
