@@ -38,11 +38,9 @@ function formatOrgRoles(rows) {
   }, []);
   return orgs.map(org => {
     const roles = rows.reduce((arr, row) => {
+      const {role_id, role_name} = row;
       return org.org_id = row.org_id
-        ? [...arr, {
-            role_id: row.role_id,
-            role_name: row.role_name,
-          }]
+        ? [...arr, { role_id, role_name }]
         : arr;
     }, [])
     return {

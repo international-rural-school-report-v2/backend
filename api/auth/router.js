@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
   })
   .catch(err => {
     res.status(500).json({
-      error: 'Could not create the new user.'
+      error: 'Could not create the new user'
     });
   });
 })
