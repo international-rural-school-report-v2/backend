@@ -12,7 +12,6 @@ describe('test environment', () => {
 describe('server', () => {
   describe('/ GET', () => {
     it('should return 200 status', () => {
-      console.log('ONE')
       return request(server)
         .get('/')
         .expect(200);
@@ -40,12 +39,10 @@ describe('server', () => {
         .send(user);
       
       it('should return status 201', () => {
-        console.log('TWO')
         return login.expect(201);
       })
 
       it('should return an object', () => {
-        console.log('THREE')
         return login.then(res => {
             expect(res.body).toEqual(Object(res.body));
           });
@@ -66,12 +63,10 @@ describe('server', () => {
         .send(userData)
 
       it('should return status 201', () => {
-        console.log('FOUR')
         return register.expect(201);
       })
 
       it('should return an object', () => {
-        console.log('FIVE')
         return register.then(res => {
             expect(res.body).toEqual(Object(res.body));
           });
@@ -85,12 +80,10 @@ describe('server', () => {
         .get('/public/orgs');
       
       it('should return status 200', () => {
-        console.log('SIX')
         return orgs.expect(200);
       })
 
       it('should return an array', () => {
-        console.log('SEVEN')
         return orgs.then(res => {
             expect(Array.isArray(res.body));
           });
@@ -102,12 +95,10 @@ describe('server', () => {
         .get('/public/roles');
 
       it('should return status 200', () => {
-        console.log('EIGHT')
         return roles.expect(200);
       })
 
       it('should return an array', () => {
-        console.log('NINE')
         return roles.then(res => {
             expect(Array.isArray(res.body));
           });
@@ -119,12 +110,10 @@ describe('server', () => {
         .get('/public/issue-status');
 
       it('should return status 200', () => {
-        console.log('TEN')
         return issue_status.expect(200);
       })
 
       it('should return an array', () => {
-        console.log('ELEVEN')
         return issue_status.then(res => {
             expect(Array.isArray(res.body));
           });
@@ -144,12 +133,10 @@ describe('server', () => {
         .set({ Authorization: user1 });
 
       it('should return status 200', () => {
-        console.log('TWELVE')
         return getIssues.expect(200);
       })
 
       it('should return an array', () => {
-        console.log('THIRTEEN')
         return getIssues.then(res => {
           expect(Array.isArray(res.body));
         })
@@ -184,12 +171,10 @@ describe('server', () => {
         .set({ Authorization: user1 });
 
       it('should return status 200', () => {
-        console.log('FIFTEEN')
         return getIssueRtID.expect(200);
       })
 
       it('should return an object', () => {
-        console.log('SIXTEEN')
         return getIssueRtID.then(res => {
           expect(res.body).toEqual(Object(res.body));
         });
