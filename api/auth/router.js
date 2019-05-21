@@ -32,9 +32,9 @@ router.post('/register', (req, res) => {
   user.password = hash;
   db.register(user)
   .then(async created => {
-    const token = await genToken(created);
     const grabbed = await grabOrgRoles(created.id);
     const org_roles = formatOrgRoles(grabbed);
+    const token = await genToken(created, org_roles);
     res.status(201).json({token, org_roles});
   })
   .catch(err => {
