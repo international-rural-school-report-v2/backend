@@ -1,8 +1,10 @@
 const Issues = require('../basicModel')('issues');
 
 module.exports = {
+  getIssueByID: Issues.get,
   getIssues,
   postIssue,
+  putIssue,
 }
 
 function getIssues(ids) {
@@ -29,4 +31,12 @@ async function postIssue(issue, created_by) {
   issue = { ...issue, created_by, updated_by: created_by }
   await Issues.postID(issue);
   return getIssues([org_id]);
+}
+
+async function putIssue(id, changes, updated_by, org_id) {
+  const updated_at = new Date().toISOString();
+  changes = {...changes, updated_by, updated_at }
+  await Issues.putEntry(id, changes);
+  const issues = await getIssues([1]);
+  return issues
 }
