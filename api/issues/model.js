@@ -5,6 +5,7 @@ module.exports = {
   getIssues,
   postIssue,
   putIssue,
+  delIssue,
 }
 
 function getIssues(ids) {
@@ -36,6 +37,11 @@ async function postIssue(issue, created_by) {
 async function putIssue(id, changes, updated_by, org_id) {
   const updated_at = new Date().toISOString();
   changes = {...changes, updated_by, updated_at }
-  await Issues.putEntry(id, changes);
+  await Issues.putNum(id, changes);
+  return getIssues([org_id]);
+}
+
+async function delIssue(id, org_id) {
+  await Issues.delNum(id);
   return getIssues([org_id]);
 }
