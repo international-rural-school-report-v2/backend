@@ -26,4 +26,16 @@ router.get('/roles', (req, res) => {
     })
 })
 
+router.get('/issue-status', (req, res) => {
+  db.getStatus()
+    .then(issue_status => {
+      res.status(200).json(issue_status);
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: 'Could not retrieve the list of issue statuses from the database'
+      })
+    })
+})
+
 module.exports = router;
