@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
     })
 })
 
-router.get('/:org_id', (req, res) => {
+router.get('/org/:org_id', (req, res) => {
   const {org_id} = req.params;
   // const {org_roles} = req.decoded;
   // const orgs = org_roles.map(org => org.org_id);
@@ -45,7 +45,7 @@ router.get('/:org_id', (req, res) => {
     })
 })
 
-router.post('/:org_id', (req, res) => {
+router.post('/org/:org_id', (req, res) => {
   const {org_id} = req.params;
   let issue = req.body;
   issue = { ...issue, org_id };
