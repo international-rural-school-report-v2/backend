@@ -44,7 +44,7 @@ describe('server', () => {
 
       it('should return an object', () => {
         return login.then(res => {
-            expect(res.body).toEqual(true);
+            expect(res.body).toEqual(Object(res.body));
           });
       })
     })
@@ -121,13 +121,13 @@ describe('server', () => {
     })
   })
 
-  describe('/issues', () => {
+  describe('/issues', async () => {
     const login = username => ({
       "username": username,
       "password": "password"
     })
     
-    const user1 = request(server)
+    const user1 = await request(server)
       .post('/auth/login')
       .send(login('user1'));
     

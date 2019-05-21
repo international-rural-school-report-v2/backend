@@ -17,11 +17,8 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   let issue = req.body;
   const {subject} = req.decoded;
-  // const {org_roles} = req.decoded;
-  // const orgs = org_roles.map(org => org.org_id);
-  // const thisOrg = org_roles.filter(obj => `${obj.org_id}` === org_id)
-  // console.log(thisOrg)
-  return db.postIssue(issue, subject)
+  const {org_id} = org_roles[0].org_roles;
+  return db.postIssue(issue, subject, org_id)
     .then(issues => {
       res.status(200).json(issues);
     })
@@ -43,13 +40,9 @@ router.get('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const {id} = req.params;
-  const {org_id} = req.body;
   const issue = req.body;
   const {subject} = req.decoded;
-  // const {org_roles} = req.decoded;
-  // const orgs = org_roles.map(org => org.org_id);
-  // const thisOrg = org_roles.filter(obj => `${obj.org_id}` === org_id)
-  // console.log(thisOrg)
+  const {org_id} = org_roles[0].org_roles;
   return db.putIssue(id, issue, subject, org_id)
     .then(issues => {
       res.status(200).json(issues);
@@ -61,7 +54,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const {id} = req.params;
-  const {org_id} = req.body;
+  const {org_id} = org_roles[0].org_roles;
   return db.delIssue(id, org_id)
     .then(issues => {
       res.status(200).json(issues);
@@ -73,9 +66,6 @@ router.delete('/:id', (req, res) => {
 
 router.get('/org/:org_id', (req, res) => {
   const {org_id} = req.params;
-  // const {org_roles} = req.decoded;
-  // const orgs = org_roles.map(org => org.org_id);
-  // if(orgs.includes(org_id))
   return db.getIssues([org_id])
     .then(issues => {
       res.status(200).json(issues);
@@ -90,10 +80,6 @@ router.post('/org/:org_id', (req, res) => {
   let issue = req.body;
   issue = { ...issue, org_id };
   const {subject} = req.decoded;
-  // const {org_roles} = req.decoded;
-  // const orgs = org_roles.map(org => org.org_id);
-  // const thisOrg = org_roles.filter(obj => `${obj.org_id}` === org_id)
-  // console.log(thisOrg)
   return db.postIssue(issue, subject)
     .then(issues => {
       res.status(200).json(issues);

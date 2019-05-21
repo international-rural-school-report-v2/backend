@@ -27,8 +27,7 @@ function getIssues(ids) {
     .join('users as ub', {'ub.id': 'i.updated_by'})
 }
 
-async function postIssue(issue, created_by) {
-  const { org_id } = issue;
+async function postIssue(issue, created_by, org_id) {
   issue = { ...issue, created_by, updated_by: created_by }
   await Issues.postID(issue);
   return getIssues([org_id]);
