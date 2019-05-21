@@ -13,7 +13,6 @@ const pgDev = localPG(process.env.DB_DEV);
 const dbSettings = (seedDir, connection) => ({
   client: 'pg',
   connection,
-  debug: true,
   pool: {
     min: 2,
     max: 10
@@ -29,6 +28,6 @@ const dbSettings = (seedDir, connection) => ({
 
 module.exports = {
   test: dbSettings('test', pgTest),
-  development: dbSettings('dev', pgDev),
+  development: dbSettings('prod', pgDev),
   production: dbSettings('prod', process.env.DATABASE_URL)
 };
