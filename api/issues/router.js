@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const db = require('./model');
-const {onlyRoles} = require('../middleware');
+const {onlyRoles, stripIssueBody} = require('../middleware');
 
 router.get('/', (req, res) => {
   const {org_id} = req;
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
     })
 })
 
-router.post('/', onlyRoles([1]), (req, res) => {
+router.post('/', stripIssueBody()(), onlyRoles([1]), (req, res) => {
   const { body, user_id, org_id } = req;
   return db.postIssue(body, user_id, org_id)
     .then(issues => {
@@ -34,7 +34,7 @@ router.get('/:id', (req, res) => {
     .then(issue => {
       if(issue.org_id !== org_id) {
         res.status(403).json({ error: `You do no have permission to view the issue with ID ${id}`})
-      } else if(!issue.length) {
+      } else if(!issue) {
         res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` }); // This isn't working yet
       } else {
         res.status(200).json(issue);
@@ -45,7 +45,10 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.put('/:id', (req, res) => {
+const putRoleFields = {
+  2: ['comments', 'status_id']
+}
+router.put('/:id', stripIssueBody()(putRoleFields), (req, res) => {
   const {id} = req.params;
   const { body, user_id, org_id } = req;
   return db.putIssue(id, body, user_id, org_id)

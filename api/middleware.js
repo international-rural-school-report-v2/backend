@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   auth,
+  stripIssueBody,
   onlyRoles,
 }
 
@@ -21,6 +22,32 @@ function auth(req, res, next) {
       res.status(403).json({ error: 'You do not have permission to access this data' })
     }
   })
+}
+
+function stripIssueBody(allowed = ['name', 'comments', 'status_id', 'org_id']) {
+  return (role_fields) => {
+    return (req, res, next) => {
+      const {role_id} = req;
+      if(!!role_fields && !!role_fields[role_id]) {
+        const fields = role_fields[role_id];
+        const flagged = Object.keys(req.body)
+          .filter(prop => !fields.includes(prop))
+          .join(', ')
+        if (!!flagged.length) {
+          return res.status(400).json({
+            error: `You are not permitted to submit any of the following fields in the body of this request: ${flagged}`
+          })
+        }
+      }
+      req.body = Object.keys(req.body)
+        .filter(prop => allowed.includes(prop))
+        .reduce((newBody, prop) => {
+          newBody[prop] = req.body[prop];
+          return newBody 
+        }, {})
+      next();
+    }
+  }
 }
 
 function onlyRoles(roles) {
@@ -43,5 +70,14 @@ function onlyRoles(roles) {
     // } else {
     //   res.status(403).json({ error: 'You are not permitted to complete this action' })
     // }
+  }
+}
+
+function limitFields(role_fields) {
+  return (req, res, next) => {
+    const {role_id} = req;
+    if(Object.keys(role_fields).includes(role_id)) {
+
+    }
   }
 }
