@@ -1,11 +1,11 @@
 const router = require('express').Router();
 
 const db = require('./model');
+const {onlyRoles} = require('../middleware');
 
 router.get('/', (req, res) => {
-  const {org_roles} = req.decoded;
-  const orgs = org_roles.map(org => org.org_id);
-  return db.getIssues(orgs)
+  const {org_id} = req;
+  return db.getIssues([org_id])
     .then(issues => {
       !!issues.length
         ? res.status(200).json(issues)
@@ -16,11 +16,9 @@ router.get('/', (req, res) => {
     })
 })
 
-router.post('/', (req, res) => {
-  let issue = req.body;
-  const {subject, org_roles} = req.decoded;
-  const {org_id} = org_roles[0];
-  return db.postIssue(issue, subject, org_id)
+router.post('/', onlyRoles([1]), (req, res) => {
+  const { body, user_id, org_id } = req;
+  return db.postIssue(body, user_id, org_id)
     .then(issues => {
       res.status(200).json(issues);
     })
@@ -31,11 +29,16 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const {id} = req.params;
+  const {org_id} = req;
   return db.getIssueByID({id})
     .then(issue => {
-      !!issue
-        ? res.status(200).json(issue)
-        : res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` });
+      if(issue.org_id !== org_id) {
+        res.status(403).json({ error: `You do no have permission to view the issue with ID ${id}`})
+      } else if(!issue.length) {
+        res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` }); // This isn't working yet
+      } else {
+        res.status(200).json(issue);
+      }
     })
     .catch(err => {
       res.status(500).json({ error: `Could not retrieve the issue with ID ${id}` })
@@ -44,10 +47,8 @@ router.get('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const {id} = req.params;
-  const issue = req.body;
-  const {subject, org_roles} = req.decoded;
-  const {org_id} = org_roles[0];
-  return db.putIssue(id, issue, subject, org_id)
+  const { body, user_id, org_id } = req;
+  return db.putIssue(id, body, user_id, org_id)
     .then(issues => {
       res.status(200).json(issues);
     })
@@ -58,8 +59,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const {id} = req.params;
-  const {org_roles} = req.decoded;
-  const {org_id} = org_roles[0];
+  const {org_id} = req;
   return db.delIssue(id, org_id)
     .then(issues => {
       Array.isArray(issues)
