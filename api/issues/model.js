@@ -37,7 +37,7 @@ async function getIssueByID(id) {
     .join('users as cb', {'cb.id': 'i.created_by'})
     .join('users as ub', {'ub.id': 'i.updated_by'})
     .first()
-  return res;
+  return !!res ? res : '';
 }
 
 async function postIssue(issue, created_by, org_id) {

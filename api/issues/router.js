@@ -32,10 +32,10 @@ router.get('/:id', (req, res) => {
   const {org_id} = req;
   return db.getIssueByID(id)
     .then(issue => {
-      if(issue.org_id !== org_id) {
-        res.status(403).json({ error: `You do no have permission to view the issue with ID ${id}`})
-      } else if(!issue) {
+      if(!issue) {
         res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` }); // This isn't working yet
+      } else if(issue.org_id !== org_id) {
+        res.status(403).json({ error: `You do no have permission to view the issue with ID ${id}`})
       } else {
         res.status(200).json(issue);
       }
