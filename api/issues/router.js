@@ -1,7 +1,13 @@
 const router = require('express').Router();
 
 const db = require('./model');
-const { orgCheckIssue, orgCheckParam, stripIssueBody, onlyRoles } = require('../middleware');
+const { 
+  orgCheckIssue,
+  orgCheckParam,
+  stripIssueBody,
+  onlyRoles,
+  statusPrevent
+} = require('../middleware');
 
 router.get('/', (req, res) => {
   const {org_id} = req;
@@ -58,7 +64,7 @@ router.put('/:id', orgCheckIssue, stripIssueBody()(putRoleFields), (req, res) =>
     })
 })
 
-router.delete('/:id', orgCheckIssue, (req, res) => {
+router.delete('/:id', statusPrevent([1, 4]), orgCheckIssue, (req, res) => {
   const {id} = req.params;
   const {org_id} = req;
   return db.delIssue(id, org_id)

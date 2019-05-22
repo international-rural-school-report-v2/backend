@@ -7,6 +7,7 @@ module.exports = {
   orgCheckParam,
   stripIssueBody,
   onlyRoles,
+  statusPrevent,
 }
 
 function auth(req, res, next) {
@@ -30,7 +31,7 @@ function auth(req, res, next) {
 async function orgCheckIssue(req, res, next) {
   const {id} = req.params;
   const {org_id} = req;
-  const issue = await Issues.getIssueByID({id});
+  const issue = await Issues.getIssueByID(id);
   issue.org_id !== org_id
     ? res.status(403).json({ error: `You are not permitted to make this request on the issue with ID ${id}` })
     : next();
@@ -88,5 +89,15 @@ function onlyRoles(roles) {
     // } else {
     //   res.status(403).json({ error: 'You are not permitted to complete this action' })
     // }
+  }
+}
+
+function statusPrevent(statuses) {
+  return async (req, res, next) => {
+    const {id} = req.params;
+    const issue = await Issues.getIssueByID(id);
+    statuses.includes(issue.status_id)
+      ? res.status(403).json({ error: `This request cannot be executed on an issue whose status is ${issue.status_name}` })
+      : next();
   }
 }
