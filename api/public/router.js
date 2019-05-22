@@ -5,7 +5,9 @@ const db = require('./model');
 router.get('/orgs', (req, res) => {
   db.getOrgs()
     .then(orgs => {
-      res.status(200).json(orgs);
+      !!orgs.length
+        ? res.status(200).json(orgs)
+        : res.status(404).json({ error: 'No organizations currently exist in our database' });
     })
     .catch(err => {
       res.status(500).json({
@@ -17,7 +19,9 @@ router.get('/orgs', (req, res) => {
 router.get('/roles', (req, res) => {
   db.getRoles()
     .then(roles => {
-      res.status(200).json(roles);
+      !!roles.length
+        ? res.status(200).json(roles)
+        : res.status(404).json({ error: 'No roles currently exist in our database' });
     })
     .catch(err => {
       res.status(500).json({
@@ -29,7 +33,9 @@ router.get('/roles', (req, res) => {
 router.get('/issue-status', (req, res) => {
   db.getStatus()
     .then(issue_status => {
-      res.status(200).json(issue_status);
+      !!issue_status
+        ? res.status(200).json(issue_status)
+        : res.status(404).json({ error: 'No issue statuses currently exist in our database' });
     })
     .catch(err => {
       res.status(500).json({

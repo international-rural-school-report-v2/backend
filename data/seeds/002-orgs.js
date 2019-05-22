@@ -7,6 +7,9 @@ exports.seed = function(knex, Promise) {
         },
         {
           name: 'Organization Two'
+        },
+        {
+          name: 'Organization Three'
         }
       ]);
     });

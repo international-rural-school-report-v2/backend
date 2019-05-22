@@ -10,7 +10,7 @@ const localPG = db => ({
 const pgTest = localPG(process.env.DB_TEST);
 const pgDev = localPG(process.env.DB_DEV);
 
-const dbSettings = (seedDir, connection) => ({
+const dbSettings = (connection) => ({
   client: 'pg',
   connection,
   pool: {
@@ -22,12 +22,12 @@ const dbSettings = (seedDir, connection) => ({
     directory: './data/migrations'
   },
   seeds: {
-    directory: `./data/seeds/${seedDir}`
+    directory: `./data/seeds`
   }
 });
 
 module.exports = {
-  test: dbSettings('test', pgTest),
-  development: dbSettings('prod', pgDev),
-  production: dbSettings('prod', process.env.DATABASE_URL)
+  test: dbSettings(pgTest),
+  development: dbSettings(pgDev),
+  production: dbSettings(process.env.DATABASE_URL)
 };

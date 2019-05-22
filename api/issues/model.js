@@ -27,9 +27,8 @@ function getIssues(ids) {
     .join('users as ub', {'ub.id': 'i.updated_by'})
 }
 
-async function postIssue(issue, created_by) {
-  const { org_id } = issue;
-  issue = { ...issue, created_by, updated_by: created_by }
+async function postIssue(issue, created_by, org_id) {
+  issue = { ...issue, org_id, created_by, updated_by: created_by }
   await Issues.postID(issue);
   return getIssues([org_id]);
 }
@@ -42,6 +41,7 @@ async function putIssue(id, changes, updated_by, org_id) {
 }
 
 async function delIssue(id, org_id) {
-  await Issues.delNum(id);
-  return getIssues([org_id]);
+  const count = await Issues.delNum(id);
+  const arr = await getIssues([org_id]);
+  return arr.length ? arr : count;
 }
