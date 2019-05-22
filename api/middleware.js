@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken');
+const Issues = require('./issues/model');
 
 module.exports = {
   auth,
+  orgCheckIssue,
+  orgCheckParam,
   stripIssueBody,
   onlyRoles,
 }
@@ -22,6 +25,21 @@ function auth(req, res, next) {
       res.status(403).json({ error: 'You do not have permission to access this data' })
     }
   })
+}
+
+async function orgCheckIssue(req, res, next) {
+  const {id} = req.params;
+  const {org_id} = req;
+  const issue = await Issues.getIssueByID({id});
+  issue.org_id !== org_id
+    ? res.status(403).json({ error: `You are not permitted to make this request on the issue with ID ${id}` })
+    : next();
+}
+
+function orgCheckParam(req, res, next) {
+  `${req.org_id}` === req.params.org_id
+    ? next()
+    : res.status(403).json({ error: `You are not permitted to make this request on the organization with ID ${req.params.org_id}` })
 }
 
 function stripIssueBody(allowed = ['name', 'comments', 'status_id', 'org_id']) {
@@ -70,14 +88,5 @@ function onlyRoles(roles) {
     // } else {
     //   res.status(403).json({ error: 'You are not permitted to complete this action' })
     // }
-  }
-}
-
-function limitFields(role_fields) {
-  return (req, res, next) => {
-    const {role_id} = req;
-    if(Object.keys(role_fields).includes(role_id)) {
-
-    }
   }
 }
