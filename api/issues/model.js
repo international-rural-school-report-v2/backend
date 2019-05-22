@@ -41,6 +41,7 @@ async function putIssue(id, changes, updated_by, org_id) {
 }
 
 async function delIssue(id, org_id) {
-  await Issues.delNum(id);
-  return getIssues([org_id]);
+  const count = await Issues.delNum(id);
+  const arr = getIssues([org_id]);
+  return arr.length ? arr : count;
 }

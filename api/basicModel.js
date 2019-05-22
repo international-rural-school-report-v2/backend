@@ -4,6 +4,7 @@ module.exports = function(tbl) {
   return {
     knex: db,
     get: function(val, sel=['*']) {
+      console.log('BAR')
       return val
         ? db(tbl).select(sel).where(val).first()
         : db(tbl).select(sel);

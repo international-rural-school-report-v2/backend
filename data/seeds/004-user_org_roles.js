@@ -28,6 +28,11 @@ exports.seed = function(knex, Promise) {
           user_id: 5,
           org_id: 1,
           role_id: 1,
+        },
+        {
+          user_id: 6,
+          org_id: 3,
+          role_id: 1,
         }
       ]);
     });

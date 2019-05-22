@@ -7,7 +7,9 @@ router.get('/', (req, res) => {
   const orgs = org_roles.map(org => org.org_id);
   return db.getIssues(orgs)
     .then(issues => {
-      res.status(200).json(issues);
+      !!issues.length
+        ? res.status(200).json(issues)
+        : res.status(404).json({ error: 'No issues exist in our database for your organization(s)' });
     })
     .catch(err => {
       res.status(500).json({ error: 'Could not retrieve issues from the database' })
@@ -31,10 +33,12 @@ router.get('/:id', (req, res) => {
   const {id} = req.params;
   return db.getIssueByID({id})
     .then(issue => {
-      res.status(200).json(issue);
+      !!issue
+        ? res.status(200).json(issue)
+        : res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` });
     })
     .catch(err => {
-      res.status(500).json({ error: `Could not retrieve the issue with an id of ${id}` })
+      res.status(500).json({ error: `Could not retrieve the issue with ID ${id}` })
     })
 })
 
@@ -48,7 +52,7 @@ router.put('/:id', (req, res) => {
       res.status(200).json(issues);
     })
     .catch(err => {
-      res.status(500).json({ error: `Could not edit the issue with an id of ${id}` })
+      res.status(500).json({ error: `Could not edit the issue with ID ${id}` })
     })
 })
 
@@ -58,10 +62,14 @@ router.delete('/:id', (req, res) => {
   const {org_id} = org_roles[0];
   return db.delIssue(id, org_id)
     .then(issues => {
-      res.status(200).json(issues);
+      Array.isArray(issues)
+        ? res.status(200).json(issues)
+        : !!issues
+          ? res.status(200).json({ message: `The item with ID ${id} was successfully deleted, but no more issues exist for you` })
+          : res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` })
     })
     .catch(err => {
-      res.status(500).json({ error: `Could not edit the issue with an id of ${id}` })
+      res.status(500).json({ error: `Could not edit the issue with ID ${id}` })
     })
 })
 
@@ -69,10 +77,12 @@ router.get('/org/:org_id', (req, res) => {
   const {org_id} = req.params;
   return db.getIssues([org_id])
     .then(issues => {
-      res.status(200).json(issues);
+      !!issues.length
+        ? res.status(200).json(issues)
+        : res.status(404).json({ error: `No issues exist in our database with organization ID ${org_id}` });
     })
     .catch(err => {
-      res.status(500).json({ error: 'Could not retrieve issues from the database' })
+      res.status(500).json({ error: `Could not retrieve issues from the database with organization ID ${org_id}` })
     })
 })
 
