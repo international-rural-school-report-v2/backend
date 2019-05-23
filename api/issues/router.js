@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
     })
 })
 
-const reqPostIssue = [ 'name', 'org_id', 'status_id', 'created_by', 'updated_by' ]
+const reqPostIssue = [ 'name', 'status_id' ]
 router.post('/', stripIssueBody()(), reqFields(reqPostIssue), onlyRoles([1]), (req, res) => {
   const { body, user_id, org_id } = req;
   return db.postIssue(body, user_id, org_id)
