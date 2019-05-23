@@ -533,7 +533,7 @@ In addition to an auto-incrementing entry id:
 
 | Name | Type   | Required | Unique | Notes |
 | ---- | ------ | -------- | ------ | ----- |
-| name | string | yes      | no     | Name of the organization |
+| name | string | yes      | yes     | Name of the organization |
 
 [Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
 
@@ -543,7 +543,7 @@ In addition to an auto-incrementing entry id:
 
 | Name | Type   | Required | Unique | Notes |
 | ---- | ------ | -------- | ------ | ----- |
-| name | string | yes      | no     | Name of the role |
+| name | string | yes      | yes     | Name of the role |
 
 [Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
 
@@ -553,9 +553,9 @@ In addition to an auto-incrementing entry id:
 
 | Name    | Type    | Required | Unique | Notes |
 | ------- | ------- | -------- | ------ | ----- |
-| user_id | integer | yes      | no     | Foreign key to [users](#users) table |
-| org_id | integer | yes      | no     | Foreign key to [orgs](#orgs) table |
-| role_id | integer | yes      | no     | Foreign key to [roles](#roles) table |
+| user_id | integer | yes      | no     | Foreign key to [`users`](#users) table |
+| org_id | integer | yes      | no     | Foreign key to [`orgs`](#orgs) table |
+| role_id | integer | yes      | no     | Foreign key to [`roles`](#roles) table |
 
 Also, there is a composite unique constraint over the combination of all three columns.
 
@@ -567,7 +567,7 @@ In addition to an auto-incrementing entry id:
 
 | Name | Type   | Required | Unique | Notes |
 | ---- | ------ | -------- | ------ | ----- |
-| name | string | yes      | no     | Name of the status type |
+| name | string | yes      | yes     | Name of the status type |
 
 [Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
 
@@ -579,10 +579,10 @@ In addition to an auto-incrementing entry id:
 | ---------- | ---------------------- | -------- | ------ | ----- |
 | name       | string                 | yes      | no     | Name/title of the issue |
 | comments   | text                   | no       | no     | Description of/comments on the issue |
-| org_id     | integer                | yes      | no     | Foreign key to [orgs](#orgs) table |
-| status_id  | integer                | yes      | no     | Foreign key to [issue_status](#issue_status) table |
-| created_by | integer                | yes      | no     | User who created the issue; foreign key to [users](#users) table |
-| updated_by | integer                | yes      | no     | User who last updated the issue; foreign key to [users](#users) table |
+| org_id     | integer                | yes      | no     | Foreign key to [`orgs`](#orgs) table |
+| status_id  | integer                | yes      | no     | Foreign key to [`issue_status`](#issue_status) table |
+| created_by | integer                | yes      | no     | User who created the issue; foreign key to [`users`](#users) table |
+| updated_by | integer                | yes      | no     | User who last updated the issue; foreign key to [`users`](#users) table |
 | created_at | timestamp w/o timezone | yes      | no     | Timestamp of when the issue was created; automatically populated by DB on creation |
 | updated_at | timestamp w/o timezone | yes      | no     | Timestamp of when the issue was last updated; automatically populated by DB on creation, automatically updated by backend on update |
 
