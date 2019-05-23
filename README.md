@@ -24,7 +24,9 @@ Expects an object with this format as the request body:
   "password": "password" //string
 }
 ```
-If the username doesn't exist in the `users` table or the password doesn't match, it will reject the request with a `401` HTTP status. If successful, it will return with a `201` HTTP status and an object with this format (same as register):
+If the username doesn't exist in the `users` table or the password doesn't match, it will reject the request with a `401` HTTP status.
+
+If successful, it will return with a `201` HTTP status and an object with this format (same as register):
 ```
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxLCJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTU4Mjk1NDg4LCJleHAiOjE1NTgzMDI2ODh9.Lwz-Wfyzto2JJOSJjRqalbonNSwhXSLmNyxMWH-aVRc",
@@ -66,7 +68,9 @@ Expects an object with this format as the request body:
   "phone": "555-555-5555" // optional/string/unique
 }
 ```
-If any of the required fields are missing, it will reject the request with a `400` HTTP status. If successful, it will return with a `201` HTTP status and an object with this format (same as login):
+If any of the required fields are missing, it will reject the request with a `400` HTTP status.
+
+If successful, it will return with a `201` HTTP status and an object with this format (same as login):
 ```
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxLCJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTU4Mjk1NDg4LCJleHAiOjE1NTgzMDI2ODh9.Lwz-Wfyzto2JJOSJjRqalbonNSwhXSLmNyxMWH-aVRc",
@@ -96,7 +100,9 @@ If any of the required fields are missing, it will reject the request with a `40
 
 ### /public/orgs GET
 
-Used to populate a dropdown of organizations for the register form. If no organizations exist in the database, it will reject the request with a `404` HTTP status. If successful, it will return a `200` HTTP status and an array of objects. Each object represents one organization in the `orgs` table:
+Used to populate a dropdown of organizations for the register form. If no organizations exist in the database, it will reject the request with a `404` HTTP status.
+
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one organization in the `orgs` table:
 ```
 [
   {
@@ -119,7 +125,9 @@ Used to populate a dropdown of organizations for the register form. If no organi
 [Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/roles GET
-Used to populate a dropdown of roles for the register form. If no roles exist in the database, it will reject the request with a `404` HTTP status. If successful, it will return a `200` HTTP status and an array of objects. Each object represents one role in the `roles` table:
+Used to populate a dropdown of roles for the register form. If no roles exist in the database, it will reject the request with a `404` HTTP status.
+
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one role in the `roles` table:
 ```
 [
   {
@@ -138,7 +146,9 @@ Used to populate a dropdown of roles for the register form. If no roles exist in
 [Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/issue-status GET
-Used to populate a dropdown of issue statuses for forms used to create or edit issues. If no status types exist in the database, it will reject the request with a `404` HTTP status. If successful, it will return a `200` HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
+Used to populate a dropdown of issue statuses for forms used to create or edit issues. If no status types exist in the database, it will reject the request with a `404` HTTP status.
+
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
 ```
 [
   {
@@ -166,7 +176,9 @@ Used to populate a dropdown of issue statuses for forms used to create or edit i
 
 ### /issues GET
 
-Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+Requires an `authorization` header with a JWT or it will reject the request with a `403` HTTP status. If no issues exist in the database for user organizations (checked against org_roles stored on the token), it will reject the request with a `404` HTTP status.
+
+If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to:
 ```
 [
   {
@@ -212,15 +224,18 @@ Requires `authorization` header w/ JWT. If successful,it  will return a `200` HT
 
 ### /issues POST
 
-Requires `authorization` header w/ JWT. Expects an object with this format as the request body:
+Requires an `authorization` header with a JWT or it will reject the request with a `403` HTTP status. Expects an object with this format as the request body:
 ```
 {
   "name": "User1",                // required/string
   "status_id": 1,                 // required/integer
-  "comments": "Description here" // optional/string
+  "comments": "Description here", // optional/string
+  "org_id": 1                     // optional/integer
 }
 ```
-If successful, it will return a `201` HTTP status and an array of objects. Each object represents one issue (including the one just created) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+If either of the required fields are missing, it will reject the request with a `400` HTTP status. If a user is not in a role at that organization that's permitted to create an issue (checked against org_roles stored on the token), it will reject the request with a `403` HTTP status.
+
+If successful, it will return a `201` HTTP status and an array of objects. Each object represents one issue (including the one just created) at one of the organizations that the user belongs to (checked against the token again):
 ```
 [
   {
@@ -266,7 +281,9 @@ If successful, it will return a `201` HTTP status and an array of objects. Each 
 
 ### /issues/:id GET
 
-Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an object. The object represents the issue with the ID specified in the path:
+Requires an `authorization` header with a JWT or it will reject the request with a `403` HTTP status. If no issue exists in the database with the ID specified in the path, it will reject the request with a `404` HTTP status. If the requested issue exists in the database, but is not associated with one of the user's organizations, then it will reject with a `403` HTTP status.
+
+If successful,it  will return a `200` HTTP status and an object. The object represents the issue with the ID specified in the path:
 ```
 {
   "id": 1,
@@ -297,7 +314,7 @@ Requires `authorization` header w/ JWT. If successful,it  will return a `200` HT
 
 ### /issues/:id PUT
 
-Requires `authorization` header w/ JWT. Expects an object with this format as the request body:
+Requires an `authorization` header with a JWT or it will reject the request with a `403` HTTP status. Expects an object with this format as the request body:
 ```
 {
   "name": "User1",               // optional/string
@@ -305,6 +322,8 @@ Requires `authorization` header w/ JWT. Expects an object with this format as th
   "comments": "Description here" // optional/string
 }
 ```
+If no issue exists in the database with the ID specified in the path, it will reject the request with a `404` HTTP status. If the requested issue exists in the database, but is not associated with one of the user's organizations, then it will reject with a `403` HTTP status. If protected fields exist in the request and a user is not in a role at that organization that permits them to edit those fields (checked against org_roles stored on the token), it will reject the request with a `400` HTTP status.
+
 If successful, it will return a `200` HTTP status and an array of objects. Each object represents one issue (including the one just edited) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
@@ -351,7 +370,9 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
 
 ### /issues/:id DELETE
 
-Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one of the remaining issues at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+Requires an `authorization` header with a JWT or it will reject the request with a `403` HTTP status. If no issue exists in the database with the ID specified in the path, it will reject the request with a `404` HTTP status. If the requested issue exists in the database, but is not associated with one of the user's organizations, then it will reject with a `403` HTTP status. Also, if the issue has a status that's considered 'archived', which are currently Done (1) or Ignored (4), it will reject the request with a `403` HTTP status.
+
+If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one of the remaining issues at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {
@@ -397,7 +418,9 @@ Requires `authorization` header w/ JWT. If successful,it  will return a `200` HT
 
 ### /issues/org/:org_id GET
 
-Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one issue at the organization specified in the path:
+Requires an `authorization` header with a JWT or it will reject the request with a `403` HTTP status.  If no issues exist in the database for the organization specified in the path (checked against org_roles stored on the token), it will reject the request with a `404` HTTP status. If the organization specified in the path is not one of the users organizations (checked against the token again), it will reject the request with a `403` HTTP status.
+
+If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one issue at the organization specified in the path:
 ```
 [
   {
