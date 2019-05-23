@@ -8,6 +8,12 @@ Section Table of Contents:
 - [/public/orgs GET](#publicorgs-get)
 - [/public/roles GET](#publicroles-get)
 - [/public/issue-status GET](#publicissue-status-get)
+- [/issues GET](#issues-get)
+- [/issues POST](#issues-post)
+- [/issues/:id GET](#issuesid-get)
+- [/issues/:id PUT](#issuesid-put)
+- [/issues/:id DELETE](#issuesid-delete)
+- [/issues/org/:org_id GET](#issuesorgorgid-get)
 
 ### /auth/login POST
 
@@ -147,3 +153,27 @@ Used to populate a dropdown of issue statuses for forms used to create or edit i
 ```
 - `id`: An integer representing the ID of the status in the `issue_status` table
 - `name`: A string representing the name of that status
+
+### /issues/ GET
+
+Requires `authorization` header w/ JWT.
+
+### /issues/ POST
+
+Requires `authorization` header w/ JWT.
+
+### /issues/:id GET
+
+Requires `authorization` header w/ JWT.
+
+### /issues/:id PUT
+
+Requires `authorization` header w/ JWT.
+
+### /issues/:id DELETE
+
+Requires `authorization` header w/ JWT.
+
+### /issues/org/:org_id GET
+
+Requires `authorization` header w/ JWT.
