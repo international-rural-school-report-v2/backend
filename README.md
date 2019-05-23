@@ -515,6 +515,7 @@ Section Contents:
 ### users
 
 In addition to an auto-incrementing entry id:
+
 | Name     | Type   | Required | Unique | Notes |
 | ----     | ------ | -------- | ------ | ----- |
 | username | string | yes      | yes    | User's username |
@@ -529,6 +530,7 @@ In addition to an auto-incrementing entry id:
 ### orgs
 
 In addition to an auto-incrementing entry id:
+
 | Name | Type   | Required | Unique | Notes |
 | ---- | ------ | -------- | ------ | ----- |
 | name | string | yes      | no     | Name of the organization |
@@ -538,6 +540,7 @@ In addition to an auto-incrementing entry id:
 ### roles
 
 In addition to an auto-incrementing entry id:
+
 | Name | Type   | Required | Unique | Notes |
 | ---- | ------ | -------- | ------ | ----- |
 | name | string | yes      | no     | Name of the role |
@@ -547,6 +550,7 @@ In addition to an auto-incrementing entry id:
 ### user_org_roles
 
 In addition to an auto-incrementing entry id:
+
 | Name    | Type    | Required | Unique | Notes |
 | ------- | ------- | -------- | ------ | ----- |
 | user_id | integer | yes      | no     | Foreign key to [users](#users) table |
@@ -560,6 +564,7 @@ Also, there is a composite unique constraint over the combination of all three c
 ### issue_status
 
 In addition to an auto-incrementing entry id:
+
 | Name | Type   | Required | Unique | Notes |
 | ---- | ------ | -------- | ------ | ----- |
 | name | string | yes      | no     | Name of the status type |
@@ -569,6 +574,7 @@ In addition to an auto-incrementing entry id:
 ### issues
 
 In addition to an auto-incrementing entry id:
+
 | Name       | Type                   | Required | Unique | Notes |
 | ---------- | ---------------------- | -------- | ------ | ----- |
 | name       | string                 | yes      | no     | Name/title of the issue |
@@ -585,6 +591,7 @@ In addition to an auto-incrementing entry id:
 ### teach_att
 
 In addition to an auto-incrementing entry id:
+
 | Name | Type       | Required | Unique | Notes |
 | ---- | ---------- | -------- | ------ | ----- |
 | name | string     | yes      | no     | Name of the relevant teacher |
