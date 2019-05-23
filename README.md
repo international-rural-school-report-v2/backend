@@ -13,7 +13,7 @@ Section Table of Contents:
 - [/issues/:id GET](#issuesid-get)
 - [/issues/:id PUT](#issuesid-put)
 - [/issues/:id DELETE](#issuesid-delete)
-- [/issues/org/:org_id GET](#issuesorgorgid-get)
+- [/issues/org/:org_id GET](#issuesorgorg_id-get)
 
 ### /auth/login POST
 
@@ -154,26 +154,257 @@ Used to populate a dropdown of issue statuses for forms used to create or edit i
 - `id`: An integer representing the ID of the status in the `issue_status` table
 - `name`: A string representing the name of that status
 
-### /issues/ GET
+### /issues GET
+
+Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+```
+[
+  {
+    "id": 1,
+    "name": "Issue 1",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 1,
+    "status_name": "Done",
+    "created_by": "user1",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user1",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  },
+  {
+    "id": 2,
+    "name": "Issue 2",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 2,
+    "status_name": "Scheduled",
+    "created_by": "user5",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user5",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  }
+]
+```
+- `id`: An integer representing the ID of the issue in the `issues` table
+- `name`: A string representing the issue's name/title
+- `comments`: A string representing a description/comments for the issue
+- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_name`: A string representing the name of that organization
+- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `created_at`: A timestamp representing the time at which the issue was created
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_at`: A timestamp representing the time at which the issue was last updated
+
+### /issues POST
 
 Requires `authorization` header w/ JWT.
 
-### /issues/ POST
-
-Requires `authorization` header w/ JWT.
+If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+```
+[
+  {
+    "id": 1,
+    "name": "Issue 1",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 1,
+    "status_name": "Done",
+    "created_by": "user1",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user1",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  },
+  {
+    "id": 2,
+    "name": "Issue 2",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 2,
+    "status_name": "Scheduled",
+    "created_by": "user5",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user5",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  }
+]
+```
+- `id`: An integer representing the ID of the issue in the `issues` table
+- `name`: A string representing the issue's name/title
+- `comments`: A string representing a description/comments for the issue
+- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_name`: A string representing the name of that organization
+- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `created_at`: A timestamp representing the time at which the issue was created
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_at`: A timestamp representing the time at which the issue was last updated
 
 ### /issues/:id GET
 
-Requires `authorization` header w/ JWT.
+Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an object. The object represents the issue with the ID specified in the path:
+```
+{
+  "id": 1,
+  "name": "Issue 1",
+  "comments": "Description here",
+  "org_id": 1,
+  "org_name": "Organization One",
+  "status_id": 1,
+  "status_name": "Done",
+  "created_by": "user1",
+  "created_at": "2019-05-23T17:29:25.150Z",
+  "updated_by": "user1",
+  "updated_at": "2019-05-23T17:29:25.150Z"
+}
+```
+- `id`: An integer representing the ID of the issue in the `issues` table
+- `name`: A string representing the issue's name/title
+- `comments`: A string representing a description/comments for the issue
+- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_name`: A string representing the name of that organization
+- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `created_at`: A timestamp representing the time at which the issue was created
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_at`: A timestamp representing the time at which the issue was last updated
 
 ### /issues/:id PUT
 
 Requires `authorization` header w/ JWT.
 
+If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+```
+[
+  {
+    "id": 1,
+    "name": "Issue 1",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 1,
+    "status_name": "Done",
+    "created_by": "user1",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user1",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  },
+  {
+    "id": 2,
+    "name": "Issue 2",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 2,
+    "status_name": "Scheduled",
+    "created_by": "user5",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user5",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  }
+]
+```
+- `id`: An integer representing the ID of the issue in the `issues` table
+- `name`: A string representing the issue's name/title
+- `comments`: A string representing a description/comments for the issue
+- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_name`: A string representing the name of that organization
+- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `created_at`: A timestamp representing the time at which the issue was created
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_at`: A timestamp representing the time at which the issue was last updated
+
 ### /issues/:id DELETE
 
 Requires `authorization` header w/ JWT.
 
+If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+```
+[
+  {
+    "id": 1,
+    "name": "Issue 1",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 1,
+    "status_name": "Done",
+    "created_by": "user1",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user1",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  },
+  {
+    "id": 2,
+    "name": "Issue 2",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 2,
+    "status_name": "Scheduled",
+    "created_by": "user5",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user5",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  }
+]
+```
+- `id`: An integer representing the ID of the issue in the `issues` table
+- `name`: A string representing the issue's name/title
+- `comments`: A string representing a description/comments for the issue
+- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_name`: A string representing the name of that organization
+- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `created_at`: A timestamp representing the time at which the issue was created
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_at`: A timestamp representing the time at which the issue was last updated
+
 ### /issues/org/:org_id GET
 
-Requires `authorization` header w/ JWT.
+Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at the organization specified in the path:
+```
+[
+  {
+    "id": 1,
+    "name": "Issue 1",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 1,
+    "status_name": "Done",
+    "created_by": "user1",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user1",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  },
+  {
+    "id": 2,
+    "name": "Issue 2",
+    "comments": "Description here",
+    "org_id": 1,
+    "org_name": "Organization One",
+    "status_id": 2,
+    "status_name": "Scheduled",
+    "created_by": "user5",
+    "created_at": "2019-05-23T17:29:25.150Z",
+    "updated_by": "user5",
+    "updated_at": "2019-05-23T17:29:25.150Z"
+  }
+]
+```
+- `id`: An integer representing the ID of the issue in the `issues` table
+- `name`: A string representing the issue's name/title
+- `comments`: A string representing a description/comments for the issue
+- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_name`: A string representing the name of that organization
+- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `created_at`: A timestamp representing the time at which the issue was created
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_at`: A timestamp representing the time at which the issue was last updated
