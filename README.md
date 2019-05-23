@@ -2,11 +2,12 @@
 
 ## API
 
-- [/auth/login POST](#auth-login-post)
-- [/auth/register POST](#auth-register-post)
-- [/public/orgs GET](#public-orgs-get)
-- [/public/roles GET](#public-roles-get)
-- [/public/issue-status GET](#public-issue-status-get)
+Section TOC:
+- [/auth/login POST](#authlogin-post)
+- [/auth/register POST](#authregister-post)
+- [/public/orgs GET](#publicorgs-get)
+- [/public/roles GET](#publicroles-get)
+- [/public/issue-status GET](#publicissue-status-get)
 
 ### /auth/login POST
 
