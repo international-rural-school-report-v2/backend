@@ -1,8 +1,12 @@
 # International Rural School Report (Backend)
 
-## API
+Sections:
+- [API Endpoints](#api-endpoints)
+- [Tables](#tables)
 
-Section Table of Contents:
+## API Endpoints
+
+Section Contents:
 - [/auth/login POST](#authlogin-post)
 - [/auth/register POST](#authregister-post)
 - [/public/orgs GET](#publicorgs-get)
@@ -25,7 +29,7 @@ Expects an object with this format as the request body:
   "password": "password" //string
 }
 ```
-If the username doesn't exist in the `users` table or the password doesn't match, it will reject the request with a `401` HTTP status.
+If the username doesn't exist in the [`users`](#users) table or the password doesn't match, it will reject the request with a `401` HTTP status.
 
 If successful, it will return with a `201` HTTP status and an object with this format (same as register):
 ```
@@ -47,13 +51,13 @@ If successful, it will return with a `201` HTTP status and an object with this f
 ```
 - `token`: A JSON Web Token
 - `org_roles`: An array of objects, each of those objects representing one organization at which the user has some role.
-    - `org_id`: An integer representing the ID of the organization from the `orgs` table
+    - `org_id`: An integer representing the ID of the organization from the [`orgs`](#orgs) table
     - `org_name`: A string representing the organization's name
     - `roles`: An array of objects, each object representing one role that the user has at the organization containing it
-        - `role_id`: An integer representing the ID of the role from the `roles` table
+        - `role_id`: An integer representing the ID of the role from the [`roles`](#roles) table
         - `role_name`: A string representing the name of that role
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /auth/register POST
 
@@ -91,19 +95,19 @@ If successful, it will return with a `201` HTTP status and an object with this f
 ```
 - `token`: A JSON Web Token
 - `org_roles`: An array of objects, each of those objects representing one organization at which the user has some role.
-    - `org_id`: An integer representing the ID of the organization from the `orgs` table
+    - `org_id`: An integer representing the ID of the organization from the [`orgs`](#orgs) table
     - `org_name`: A string representing the organization's name
     - `roles`: An array of objects, each object representing one role that the user has at the organization containing it
-        - `role_id`: An integer representing the ID of the role from the `roles` table
+        - `role_id`: An integer representing the ID of the role from the [`roles`](#roles) table
         - `role_name`: A string representing the name of that role
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/orgs GET
 
 Used to populate a dropdown of organizations for the register form. If no organizations exist in the database, it will reject the request with a `404` HTTP status.
 
-If successful, it will return a `200` HTTP status and an array of objects. Each object represents one organization in the `orgs` table:
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one organization in the [`orgs`](#orgs) table:
 ```
 [
   {
@@ -120,15 +124,15 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the organization in the `orgs` table
+- `id`: An integer representing the ID of the organization in the [`orgs`](#orgs) table
 - `name`: A string representing the organization's name
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/roles GET
 Used to populate a dropdown of roles for the register form. If no roles exist in the database, it will reject the request with a `404` HTTP status.
 
-If successful, it will return a `200` HTTP status and an array of objects. Each object represents one role in the `roles` table:
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one role in the [`roles`](#roles) table:
 ```
 [
   {
@@ -141,15 +145,15 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the role in the `roles` table
+- `id`: An integer representing the ID of the role in the [`roles`](#roles) table
 - `name`: A string representing the name of that role
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/issue-status GET
 Used to populate a dropdown of issue statuses for forms used to create or edit issues. If no status types exist in the database, it will reject the request with a `404` HTTP status.
 
-If successful, it will return a `200` HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one status type in the [`issue_status`](#issue_status) table:
 ```
 [
   {
@@ -170,10 +174,10 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the status in the `issue_status` table
+- `id`: An integer representing the ID of the status in the [`issue_status`](#issue_status) table
 - `name`: A string representing the name of that status
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues GET
 
@@ -210,18 +214,18 @@ If successful,it  will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the issue in the `issues` table
+- `id`: An integer representing the ID of the issue in the [`issues`](#issues) table
 - `name`: A string representing the issue's name/title
 - `comments`: A string representing a description/comments for the issue
-- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_id`: An integer representing the ID of the organization (in the [`orgs`](#orgs) table) to which this issue is associated
 - `org_name`: A string representing the name of that organization
-- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
-- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `status_id`: An integer representing the ID of the current status (in the [`issue_status`](#issue_status) table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the [`users`](#users) table)
 - `created_at`: A timestamp representing the time at which the issue was created
-- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the [`users`](#users) table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues POST
 
@@ -267,18 +271,18 @@ If successful, it will return a `201` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the issue in the `issues` table
+- `id`: An integer representing the ID of the issue in the [`issues`](#issues) table
 - `name`: A string representing the issue's name/title
 - `comments`: A string representing a description/comments for the issue
-- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_id`: An integer representing the ID of the organization (in the [`orgs`](#orgs) table) to which this issue is associated
 - `org_name`: A string representing the name of that organization
-- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
-- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `status_id`: An integer representing the ID of the current status (in the [`issue_status`](#issue_status) table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the [`users`](#users) table)
 - `created_at`: A timestamp representing the time at which the issue was created
-- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the [`users`](#users) table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/:id GET
 
@@ -300,18 +304,18 @@ If successful,it  will return a `200` HTTP status and an object. The object repr
   "updated_at": "2019-05-23T17:29:25.150Z"
 }
 ```
-- `id`: An integer representing the ID of the issue in the `issues` table
+- `id`: An integer representing the ID of the issue in the [`issues`](#issues) table
 - `name`: A string representing the issue's name/title
 - `comments`: A string representing a description/comments for the issue
-- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_id`: An integer representing the ID of the organization (in the [`orgs`](#orgs) table) to which this issue is associated
 - `org_name`: A string representing the name of that organization
-- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
-- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `status_id`: An integer representing the ID of the current status (in the [`issue_status`](#issue_status) table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the [`users`](#users) table)
 - `created_at`: A timestamp representing the time at which the issue was created
-- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the [`users`](#users) table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/:id PUT
 
@@ -356,18 +360,18 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the issue in the `issues` table
+- `id`: An integer representing the ID of the issue in the [`issues`](#issues) table
 - `name`: A string representing the issue's name/title
 - `comments`: A string representing a description/comments for the issue
-- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_id`: An integer representing the ID of the organization (in the [`orgs`](#orgs) table) to which this issue is associated
 - `org_name`: A string representing the name of that organization
-- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
-- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `status_id`: An integer representing the ID of the current status (in the [`issue_status`](#issue_status) table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the [`users`](#users) table)
 - `created_at`: A timestamp representing the time at which the issue was created
-- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the [`users`](#users) table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/:id DELETE
 
@@ -404,18 +408,18 @@ If successful,it  will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the issue in the `issues` table
+- `id`: An integer representing the ID of the issue in the [`issues`](#issues) table
 - `name`: A string representing the issue's name/title
 - `comments`: A string representing a description/comments for the issue
-- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_id`: An integer representing the ID of the organization (in the [`orgs`](#orgs) table) to which this issue is associated
 - `org_name`: A string representing the name of that organization
-- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
-- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `status_id`: An integer representing the ID of the current status (in the [`issue_status`](#issue_status) table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the [`users`](#users) table)
 - `created_at`: A timestamp representing the time at which the issue was created
-- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the [`users`](#users) table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/org/:org_id GET
 
@@ -452,22 +456,22 @@ If successful,it  will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the issue in the `issues` table
+- `id`: An integer representing the ID of the issue in the [`issues`](#issues) table
 - `name`: A string representing the issue's name/title
 - `comments`: A string representing a description/comments for the issue
-- `org_id`: An integer representing the ID of the organization (in the `orgs` table) to which this issue is associated
+- `org_id`: An integer representing the ID of the organization (in the [`orgs`](#orgs) table) to which this issue is associated
 - `org_name`: A string representing the name of that organization
-- `status_id`: An integer representing the ID of the current status (in the `issue_status` table) of the issue
-- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the `users` table)
+- `status_id`: An integer representing the ID of the current status (in the [`issue_status`](#issue_status) table) of the issue
+- `created_by`: A string representing the username of the user who created the issue (populated via foreign key reference to the [`users`](#users) table)
 - `created_at`: A timestamp representing the time at which the issue was created
-- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
+- `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the [`users`](#users) table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
 
 ### /teachers-attendance GET
 
-If successful, it will return a `200` HTTP status and an array of objects. Each object represents one entry in the `teach_att` table:
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one entry in the [`teach_att`](#teach_att) table:
 ```
 [
   {
@@ -488,11 +492,105 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
   }
 ]
 ```
-- `id`: An integer representing the ID of the attendance entry in the `teach_att` table
+- `id`: An integer representing the ID of the attendance entry in the [`teach_att`](#teach_att) table
 - `name`: A string representing the name of the teacher whose attendance is being tracked
 - `date`: A large-range integer (returned as a string) that represents the date of the attendance being tracked
 - `in`: An integer representing the hour (in 24-hour time) that the teacher started the day
 - `out`: An integer representing the hour (in 24-hour time) that the teacher ended the day
 - `tmm`: An integer representing the Total Minutes Missed
 
-[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api-endpoints) | [Top of page](#international-rural-school-report-backend)
+
+## Tables
+
+Section Contents:
+- [users](#users)
+- [orgs](#orgs)
+- [roles](#roles)
+- [user_org_roles](#user_org_roles)
+- [issue_status](#issue_status)
+- [issues](#issues)
+- [teach_att](#teach_att)
+
+### users
+
+In addition to an auto-incrementing entry id:
+| Name     | Type   | Required | Unique | Notes |
+| ----     | ----   | -------- | ------ | ----- |
+| username | string | yes      | yes    | User's username |
+| password | string | yes      | no     | User's hashed password |
+| name     | string | yes      | no     | User's name |
+| phone    | string | no       | yes    | User's phone number |
+| email    | string | no       | yes    | User's email |
+
+
+[Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
+
+### orgs
+
+In addition to an auto-incrementing entry id:
+| Name | Type   | Required | Unique | Notes |
+| ---- | ----   | -------- | ------ | ----- |
+| name | string | yes      | no     | Name of the organization |
+
+[Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
+
+### roles
+
+In addition to an auto-incrementing entry id:
+| Name | Type   | Required | Unique | Notes |
+| ---- | ----   | -------- | ------ | ----- |
+| name | string | yes      | no     | Name of the role |
+
+[Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
+
+### user_org_roles
+
+In addition to an auto-incrementing entry id:
+| Name    | Type    | Required | Unique | Notes |
+| ----    | ----    | -------- | ------ | ----- |
+| user_id | integer | yes      | no     | Foreign key to [users](#users) table |
+| org_id | integer | yes      | no     | Foreign key to [orgs](#orgs) table |
+| role_id | integer | yes      | no     | Foreign key to [roles](#roles) table |
+
+Also, there is a composite unique constraint over the combination of all three columns.
+
+[Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
+
+### issue_status
+
+In addition to an auto-incrementing entry id:
+| Name | Type   | Required | Unique | Notes |
+| ---- | ----   | -------- | ------ | ----- |
+| name | string | yes      | no     | Name of the status type |
+
+[Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
+
+### issues
+
+In addition to an auto-incrementing entry id:
+| Name       | Type                   | Required | Unique | Notes |
+| ----       | ----                   | -------- | ------ | ----- |
+| name       | string                 | yes      | no     | Name/title of the issue |
+| comments   | text                   | no       | no     | Description of/comments on the issue |
+| org_id     | integer                | yes      | no     | Foreign key to [orgs](#orgs) table |
+| status_id  | integer                | yes      | no     | Foreign key to [issue_status](#issue_status) table |
+| created_by | integer                | yes      | no     | User who created the issue; foreign key to [users](#users) table |
+| updated_by | integer                | yes      | no     | User who last updated the issue; foreign key to [users](#users) table |
+| created_at | timestamp w/o timezone | yes      | no     | Timestamp of when the issue was created; automatically populated by DB on creation |
+| updated_at | timestamp w/o timezone | yes      | no     | Timestamp of when the issue was last updated; automatically populated by DB on creation, automatically updated by backend on update |
+
+[Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
+
+### teach_att
+
+In addition to an auto-incrementing entry id:
+| Name | Type       | Required | Unique | Notes |
+| ---- | ----       | -------- | ------ | ----- |
+| name | string     | yes      | no     | Name of the relevant teacher |
+| date | bigInteger | yes      | no     | Date of the attendance being tracked  |
+| in   | integer    | yes      | no     | The hour (in 24-hour time) that the teacher started the day |
+| out  | integer    | yes      | no     | The hour (in 24-hour time) that the teacher ended the day |
+| tmm  | integer    | yes      | no     | Total Minutes Missed |
+
+[Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
