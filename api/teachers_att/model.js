@@ -1,7 +1,7 @@
-const teachersAtt = require('../basicModel')('teachersAtt');
+const db = require('../../data/dbConfig.js')
 
 const getTeachersAttData = () => {
-  return teachersAtt('user_settings')
+  return db('teach_att')
     .select('*')
     .orderBy('date', 'desc');;
 };
