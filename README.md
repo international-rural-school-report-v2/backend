@@ -516,7 +516,7 @@ Section Contents:
 
 In addition to an auto-incrementing entry id:
 | Name     | Type   | Required | Unique | Notes |
-| ----     | ----   | -------- | ------ | ----- |
+| ----     | ------ | -------- | ------ | ----- |
 | username | string | yes      | yes    | User's username |
 | password | string | yes      | no     | User's hashed password |
 | name     | string | yes      | no     | User's name |
@@ -530,7 +530,7 @@ In addition to an auto-incrementing entry id:
 
 In addition to an auto-incrementing entry id:
 | Name | Type   | Required | Unique | Notes |
-| ---- | ----   | -------- | ------ | ----- |
+| ---- | ------ | -------- | ------ | ----- |
 | name | string | yes      | no     | Name of the organization |
 
 [Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
@@ -539,7 +539,7 @@ In addition to an auto-incrementing entry id:
 
 In addition to an auto-incrementing entry id:
 | Name | Type   | Required | Unique | Notes |
-| ---- | ----   | -------- | ------ | ----- |
+| ---- | ------ | -------- | ------ | ----- |
 | name | string | yes      | no     | Name of the role |
 
 [Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
@@ -548,7 +548,7 @@ In addition to an auto-incrementing entry id:
 
 In addition to an auto-incrementing entry id:
 | Name    | Type    | Required | Unique | Notes |
-| ----    | ----    | -------- | ------ | ----- |
+| ------- | ------- | -------- | ------ | ----- |
 | user_id | integer | yes      | no     | Foreign key to [users](#users) table |
 | org_id | integer | yes      | no     | Foreign key to [orgs](#orgs) table |
 | role_id | integer | yes      | no     | Foreign key to [roles](#roles) table |
@@ -561,7 +561,7 @@ Also, there is a composite unique constraint over the combination of all three c
 
 In addition to an auto-incrementing entry id:
 | Name | Type   | Required | Unique | Notes |
-| ---- | ----   | -------- | ------ | ----- |
+| ---- | ------ | -------- | ------ | ----- |
 | name | string | yes      | no     | Name of the status type |
 
 [Top of Tables section](#tables) | [Top of page](#international-rural-school-report-backend)
@@ -570,7 +570,7 @@ In addition to an auto-incrementing entry id:
 
 In addition to an auto-incrementing entry id:
 | Name       | Type                   | Required | Unique | Notes |
-| ----       | ----                   | -------- | ------ | ----- |
+| ---------- | ---------------------- | -------- | ------ | ----- |
 | name       | string                 | yes      | no     | Name/title of the issue |
 | comments   | text                   | no       | no     | Description of/comments on the issue |
 | org_id     | integer                | yes      | no     | Foreign key to [orgs](#orgs) table |
@@ -586,7 +586,7 @@ In addition to an auto-incrementing entry id:
 
 In addition to an auto-incrementing entry id:
 | Name | Type       | Required | Unique | Notes |
-| ---- | ----       | -------- | ------ | ----- |
+| ---- | ---------- | -------- | ------ | ----- |
 | name | string     | yes      | no     | Name of the relevant teacher |
 | date | bigInteger | yes      | no     | Date of the attendance being tracked  |
 | in   | integer    | yes      | no     | The hour (in 24-hour time) that the teacher started the day |
