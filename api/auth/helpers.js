@@ -9,7 +9,7 @@ module.exports = {
 }
 
 async function genToken(user, org_roles) {
-  const {id, username} = user;
+  const { id, username } = user;
   const pyld = {
     subject: id,
     username,
@@ -24,10 +24,10 @@ async function genToken(user, org_roles) {
 
 function grabOrgRoles(id) {
   return db.knex('user_org_roles as uor')
-    .select('o.id as org_id','o.name as org_name','r.id as role_id','r.name as role_name')
-    .where({user_id: id})
-    .join('orgs as o', {'o.id': 'uor.org_id'})
-    .join('roles as r', {'r.id': 'uor.role_id'});
+    .select('o.id as org_id', 'o.name as org_name', 'r.id as role_id', 'r.name as role_name')
+    .where({ user_id: id })
+    .join('orgs as o', { 'o.id': 'uor.org_id' })
+    .join('roles as r', { 'r.id': 'uor.role_id' });
 }
 
 function formatOrgRoles(rows) {
@@ -38,7 +38,7 @@ function formatOrgRoles(rows) {
   }, []);
   return orgs.map(org => {
     const roles = rows.reduce((arr, row) => {
-      const {role_id, role_name} = row;
+      const { role_id, role_name } = row;
       return org.org_id = row.org_id
         ? [...arr, { role_id, role_name }]
         : arr;
