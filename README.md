@@ -2,7 +2,7 @@
 
 ## API
 
-Section TOC:
+Section Table of Contents:
 - [/auth/login POST](#authlogin-post)
 - [/auth/register POST](#authregister-post)
 - [/public/orgs GET](#publicorgs-get)
@@ -106,7 +106,7 @@ Used to populate a dropdown of organizations for the register form. If successfu
 - `id`: An integer representing the ID of the organization in the `orgs` table
 - `name`: A string representing the organization's name
 
-### /public/roles
+### /public/roles GET
 Used to populate a dropdown of roles for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one role in the `roles` table:
 ```
 [
@@ -123,7 +123,7 @@ Used to populate a dropdown of roles for the register form. If successful, will 
 - `id`: An integer representing the ID of the role in the `roles` table
 - `name`: A string representing the name of that role
 
-### /public/issue-status
+### /public/issue-status GET
 Used to populate a dropdown of issue statuses for forms used to create or edit issues. If successful, will return a '200' HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
 ```
 [
