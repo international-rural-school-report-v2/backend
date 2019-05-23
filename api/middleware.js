@@ -3,6 +3,7 @@ const Issues = require('./issues/model');
 
 module.exports = {
   auth,
+  reqFields,
   orgCheckIssue,
   orgCheckParam,
   stripIssueBody,
@@ -26,6 +27,17 @@ function auth(req, res, next) {
       res.status(403).json({ error: 'You do not have permission to access this data' })
     }
   })
+}
+
+function reqFields(fields) {
+  return (req, res, next) => {
+    const missing = fields
+      .filter(prop => !Object.keys(req.body).includes(prop))
+      .join(', ');
+    !!missing.length
+      ? res.status(400).json({ error: `Your request is missing the following required fields: ${missing}`})
+      : next();
+  }
 }
 
 async function orgCheckIssue(req, res, next) {

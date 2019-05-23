@@ -1,7 +1,8 @@
 const router = require('express').Router();
 
 const db = require('./model');
-const { 
+const {
+  reqFields,
   orgCheckIssue,
   orgCheckParam,
   stripIssueBody,
@@ -22,7 +23,8 @@ router.get('/', (req, res) => {
     })
 })
 
-router.post('/', stripIssueBody()(), onlyRoles([1]), (req, res) => {
+const reqPostIssue = [ 'name', 'org_id', 'status_id', 'created_by', 'updated_by' ]
+router.post('/', stripIssueBody()(), reqFields(reqPostIssue), onlyRoles([1]), (req, res) => {
   const { body, user_id, org_id } = req;
   return db.postIssue(body, user_id, org_id)
     .then(issues => {

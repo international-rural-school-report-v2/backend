@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const db = require('./model');
 const {genToken, grabOrgRoles, formatOrgRoles} = require('./helpers');
+const {reqFields} = require('../middleware');
 
 router.post('/login', (req, res) => {
   let { username, password } = req.body;
@@ -26,7 +27,8 @@ router.post('/login', (req, res) => {
     });
 })
 
-router.post('/register', (req, res) => {
+const reqRegister = [ 'username', 'password', 'name', 'role_id', 'org_id' ];
+router.post('/register', reqFields(reqRegister), (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 12);
   user.password = hash;

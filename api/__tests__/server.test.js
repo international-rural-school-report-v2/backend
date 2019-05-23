@@ -34,19 +34,41 @@ describe('server', () => {
         "username": "user1",
         "password": "password"
       }
+
+      const notUser = {
+        "username": "foobar",
+        "password": "password"
+      }
+
+      const notPassword = {
+        "username": "user1",
+        "password": "foobar"
+      }
       
-      const login = request(server)
+      const loginValid = request(server)
         .post('/auth/login')
         .send(user);
       
       it('should return status 201', () => {
-        return login.expect(201);
+        return loginValid.expect(201);
       })
 
       it('should return an object', () => {
-        return login.then(res => {
+        return loginValid.then(res => {
           expect(getType(res.body)).toBe('object');
         });
+      })
+
+      it('should return status 401 w/ invalid username', () => {
+        return request(server)
+          .post('/auth/login')
+          .send(notUser);
+      })
+
+      it('should return status 401 w/ invalid password', () => {
+        return request(server)
+          .post('/auth/login')
+          .send(notPassword);
       })
     })
 
