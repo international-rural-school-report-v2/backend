@@ -17,14 +17,14 @@ Section Table of Contents:
 
 ### /auth/login POST
 
-Expects an object with this format:
+Expects an object with this format as the request body:
 ```
 {
   "username": "User1",   //string
   "password": "password" //string
 }
 ```
-If successful, will return with a '201' HTTP status and an object with this format (same as register):
+If the username doesn't exist in the `users` table or the password doesn't match, it will reject the request with a `401` HTTP status. If successful, it will return with a `201` HTTP status and an object with this format (same as register):
 ```
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxLCJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTU4Mjk1NDg4LCJleHAiOjE1NTgzMDI2ODh9.Lwz-Wfyzto2JJOSJjRqalbonNSwhXSLmNyxMWH-aVRc",
@@ -54,7 +54,7 @@ If successful, will return with a '201' HTTP status and an object with this form
 
 ### /auth/register POST
 
-Expects an object with this format:
+Expects an object with this format as the request body:
 ```
 {
   "username": "User1",    // required/string/unique
@@ -66,7 +66,7 @@ Expects an object with this format:
   "phone": "555-555-5555" // optional/string/unique
 }
 ```
-If successful, will return with a '201' HTTP status and an object with this format (same as login):
+If any of the required fields are missing, it will reject the request with a `400` HTTP status. If successful, it will return with a `201` HTTP status and an object with this format (same as login):
 ```
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxLCJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTU4Mjk1NDg4LCJleHAiOjE1NTgzMDI2ODh9.Lwz-Wfyzto2JJOSJjRqalbonNSwhXSLmNyxMWH-aVRc",
@@ -96,7 +96,7 @@ If successful, will return with a '201' HTTP status and an object with this form
 
 ### /public/orgs GET
 
-Used to populate a dropdown of organizations for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one organization in the `orgs` table:
+Used to populate a dropdown of organizations for the register form. If no organizations exist in the database, it will reject the request with a `404` HTTP status. If successful, it will return a `200` HTTP status and an array of objects. Each object represents one organization in the `orgs` table:
 ```
 [
   {
@@ -119,7 +119,7 @@ Used to populate a dropdown of organizations for the register form. If successfu
 [Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/roles GET
-Used to populate a dropdown of roles for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one role in the `roles` table:
+Used to populate a dropdown of roles for the register form. If no roles exist in the database, it will reject the request with a `404` HTTP status. If successful, it will return a `200` HTTP status and an array of objects. Each object represents one role in the `roles` table:
 ```
 [
   {
@@ -138,7 +138,7 @@ Used to populate a dropdown of roles for the register form. If successful, will 
 [Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/issue-status GET
-Used to populate a dropdown of issue statuses for forms used to create or edit issues. If successful, will return a '200' HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
+Used to populate a dropdown of issue statuses for forms used to create or edit issues. If no status types exist in the database, it will reject the request with a `404` HTTP status. If successful, it will return a `200` HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
 ```
 [
   {
@@ -166,7 +166,7 @@ Used to populate a dropdown of issue statuses for forms used to create or edit i
 
 ### /issues GET
 
-Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {
@@ -212,7 +212,7 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 
 ### /issues POST
 
-Requires `authorization` header w/ JWT. Expects an object with this format:
+Requires `authorization` header w/ JWT. Expects an object with this format as the request body:
 ```
 {
   "name": "User1",                // required/string
@@ -220,7 +220,7 @@ Requires `authorization` header w/ JWT. Expects an object with this format:
   "comments": "Description here" // optional/string
 }
 ```
-If successful, will return a '201' HTTP status and an array of objects. Each object represents one issue (including the one just created) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+If successful, it will return a `201` HTTP status and an array of objects. Each object represents one issue (including the one just created) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {
@@ -266,7 +266,7 @@ If successful, will return a '201' HTTP status and an array of objects. Each obj
 
 ### /issues/:id GET
 
-Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an object. The object represents the issue with the ID specified in the path:
+Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an object. The object represents the issue with the ID specified in the path:
 ```
 {
   "id": 1,
@@ -297,7 +297,7 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 
 ### /issues/:id PUT
 
-Requires `authorization` header w/ JWT. Expects an object with this format:
+Requires `authorization` header w/ JWT. Expects an object with this format as the request body:
 ```
 {
   "name": "User1",               // optional/string
@@ -305,7 +305,7 @@ Requires `authorization` header w/ JWT. Expects an object with this format:
   "comments": "Description here" // optional/string
 }
 ```
-If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue (including the one just edited) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one issue (including the one just edited) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {
@@ -351,7 +351,7 @@ If successful, will return a '200' HTTP status and an array of objects. Each obj
 
 ### /issues/:id DELETE
 
-Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an array of objects. Each object represents one of the remaining issues at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one of the remaining issues at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {
@@ -397,7 +397,7 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 
 ### /issues/org/:org_id GET
 
-Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at the organization specified in the path:
+Requires `authorization` header w/ JWT. If successful,it  will return a `200` HTTP status and an array of objects. Each object represents one issue at the organization specified in the path:
 ```
 [
   {
