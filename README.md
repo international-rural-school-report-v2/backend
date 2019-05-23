@@ -2,13 +2,15 @@
 
 ## API
 
+- (/auth/login POST)[#]
+
 ### /auth/login POST
 
 Expects an object with this format:
 ```
 {
-  "username": "User1",
-  "password": "password"
+  "username": "User1",   //string
+  "password": "password" //string
 }
 ```
 If successful, will return with a '201' HTTP status and an object with this format (same as register):
@@ -29,13 +31,12 @@ If successful, will return with a '201' HTTP status and an object with this form
   ]
 }
 ```
-
 - `token`: A JSON Web Token
 - `org_roles`: An array of objects, each of those objects representing one organization at which the user has some role.
-    - `org_id`: An integer representing he id of the organization from the `orgs` table
+    - `org_id`: An integer representing the ID of the organization from the `orgs` table
     - `org_name`: A string representing the organization's name
     - `roles`: An array of objects, each object representing one role that the user has at the organization containing it
-        - `role_id`: An integer representing the id of the role from the `roles` table
+        - `role_id`: An integer representing the ID of the role from the `roles` table
         - `role_name`: A string representing the name of that role
 
 ### /auth/register POST
@@ -70,13 +71,12 @@ If successful, will return with a '201' HTTP status and an object with this form
   ]
 }
 ```
-
 - `token`: A JSON Web Token
 - `org_roles`: An array of objects, each of those objects representing one organization at which the user has some role.
-    - `org_id`: An integer representing he id of the organization from the `orgs` table
+    - `org_id`: An integer representing the ID of the organization from the `orgs` table
     - `org_name`: A string representing the organization's name
     - `roles`: An array of objects, each object representing one role that the user has at the organization containing it
-        - `role_id`: An integer representing the id of the role from the `roles` table
+        - `role_id`: An integer representing the ID of the role from the `roles` table
         - `role_name`: A string representing the name of that role
 
 ### /public/orgs GET
@@ -98,6 +98,8 @@ Used to populate a dropdown of organizations for the register form. If successfu
   }
 ]
 ```
+- `id`: An integer representing the ID of the organization in the `orgs` table
+- `name`: A string representing the organization's name
 
 ### /public/roles
 Used to populate a dropdown of roles for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one role in the `roles` table:
@@ -113,6 +115,8 @@ Used to populate a dropdown of roles for the register form. If successful, will 
   }
 ]
 ```
+- `id`: An integer representing the ID of the role in the `roles` table
+- `name`: A string representing the name of that role
 
 ### /public/issue-status
 Used to populate a dropdown of issue statuses for forms used to create or edit issues. If successful, will return a '200' HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
@@ -136,3 +140,5 @@ Used to populate a dropdown of issue statuses for forms used to create or edit i
   }
 ]
 ```
+- `id`: An integer representing the ID of the status in the `issue_status` table
+- `name`: A string representing the name of that status
