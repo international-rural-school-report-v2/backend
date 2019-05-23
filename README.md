@@ -14,6 +14,7 @@ Section Table of Contents:
 - [/issues/:id PUT](#issuesid-put)
 - [/issues/:id DELETE](#issuesid-delete)
 - [/issues/org/:org_id GET](#issuesorgorg_id-get)
+- [/teachers-attendance GET](#teachers-attendance-get)
 
 ### /auth/login POST
 
@@ -52,7 +53,7 @@ If successful, it will return with a `201` HTTP status and an object with this f
         - `role_id`: An integer representing the ID of the role from the `roles` table
         - `role_name`: A string representing the name of that role
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /auth/register POST
 
@@ -96,7 +97,7 @@ If successful, it will return with a `201` HTTP status and an object with this f
         - `role_id`: An integer representing the ID of the role from the `roles` table
         - `role_name`: A string representing the name of that role
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/orgs GET
 
@@ -122,7 +123,7 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
 - `id`: An integer representing the ID of the organization in the `orgs` table
 - `name`: A string representing the organization's name
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/roles GET
 Used to populate a dropdown of roles for the register form. If no roles exist in the database, it will reject the request with a `404` HTTP status.
@@ -143,7 +144,7 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
 - `id`: An integer representing the ID of the role in the `roles` table
 - `name`: A string representing the name of that role
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/issue-status GET
 Used to populate a dropdown of issue statuses for forms used to create or edit issues. If no status types exist in the database, it will reject the request with a `404` HTTP status.
@@ -172,7 +173,7 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
 - `id`: An integer representing the ID of the status in the `issue_status` table
 - `name`: A string representing the name of that status
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues GET
 
@@ -220,7 +221,7 @@ If successful,it  will return a `200` HTTP status and an array of objects. Each 
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues POST
 
@@ -277,7 +278,7 @@ If successful, it will return a `201` HTTP status and an array of objects. Each 
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/:id GET
 
@@ -310,7 +311,7 @@ If successful,it  will return a `200` HTTP status and an object. The object repr
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/:id PUT
 
@@ -366,7 +367,7 @@ If successful, it will return a `200` HTTP status and an array of objects. Each 
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/:id DELETE
 
@@ -414,7 +415,7 @@ If successful,it  will return a `200` HTTP status and an array of objects. Each 
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/org/:org_id GET
 
@@ -462,4 +463,36 @@ If successful,it  will return a `200` HTTP status and an array of objects. Each 
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
-[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
+
+### /teachers-attendance GET
+
+If successful, it will return a `200` HTTP status and an array of objects. Each object represents one entry in the `teach_att` table:
+```
+[
+  {
+    "id": 1,
+    "name": "Teacher One",
+    "date": "1558609185000",
+    "in": 9,
+    "out": 11,
+    "tmm": 42
+  },
+  {
+    "id": 2,
+    "name": "Teacher Two",
+    "date": "1558609185000",
+    "in": 10,
+    "out": 13,
+    "tmm": 77
+  }
+]
+```
+- `id`: An integer representing the ID of the attendance entry in the `teach_att` table
+- `name`: A string representing the name of the teacher whose attendance is being tracked
+- `date`: A large-range integer (returned as a string) that represents the date of the attendance being tracked
+- `in`: An integer representing the hour (in 24-hour time) that the teacher started the day
+- `out`: An integer representing the hour (in 24-hour time) that the teacher ended the day
+- `tmm`: An integer representing the Total Minutes Missed
+
+[Top of API section](#api) | [Top of page](#international-rural-school-report-backend)
