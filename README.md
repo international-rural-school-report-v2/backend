@@ -1,6 +1,8 @@
-# backend
+# International Rural School Report (Backend)
 
-## /auth/login POST
+## API
+
+### /auth/login POST
 
 Expects an object with this format:
 ```
@@ -9,7 +11,7 @@ Expects an object with this format:
   "password": "password"
 }
 ```
-If successful, will return with a '201' HTTP status and an object with this format:
+If successful, will return with a '201' HTTP status and an object with this format (same as register):
 ```
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxLCJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTU4Mjk1NDg4LCJleHAiOjE1NTgzMDI2ODh9.Lwz-Wfyzto2JJOSJjRqalbonNSwhXSLmNyxMWH-aVRc",
@@ -28,21 +30,29 @@ If successful, will return with a '201' HTTP status and an object with this form
 }
 ```
 
-## /auth/register POST
+- `token`: A JSON Web Token
+- `org_roles`: An array of objects, each of those objects representing one organization at which the user has some role.
+    - `org_id`: An integer representing he id of the organization from the `orgs` table
+    - `org_name`: A string representing the organization's name
+    - `roles`: An array of objects, each object representing one role that the user has at the organization containing it
+        - `role_id`: An integer representing the id of the role from the `roles` table
+        - `role_name`: A string representing the name of that role
+
+### /auth/register POST
 
 Expects an object with this format:
 ```
 {
-	"username": "User1",    // required/string/unique
-	"password": "password", // required/string
-	"name": "TEST",         // required/string
-	"role_id": 2,           // required/number
-	"org_id": 2,            // required/number
+  "username": "User1",    // required/string/unique
+  "password": "password", // required/string
+  "name": "TEST",         // required/string
+  "role_id": 2,           // required/number
+  "org_id": 2,            // required/number
   "email": "foo@bar.com,  // optional/string/unique
   "phone": "555-555-5555" // optional/string/unique
 }
 ```
-If successful, will return with a '201' HTTP status and an object with this format:
+If successful, will return with a '201' HTTP status and an object with this format (same as login):
 ```
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxLCJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNTU4Mjk1NDg4LCJleHAiOjE1NTgzMDI2ODh9.Lwz-Wfyzto2JJOSJjRqalbonNSwhXSLmNyxMWH-aVRc",
@@ -59,4 +69,70 @@ If successful, will return with a '201' HTTP status and an object with this form
     }
   ]
 }
+```
+
+- `token`: A JSON Web Token
+- `org_roles`: An array of objects, each of those objects representing one organization at which the user has some role.
+    - `org_id`: An integer representing he id of the organization from the `orgs` table
+    - `org_name`: A string representing the organization's name
+    - `roles`: An array of objects, each object representing one role that the user has at the organization containing it
+        - `role_id`: An integer representing the id of the role from the `roles` table
+        - `role_name`: A string representing the name of that role
+
+### /public/orgs GET
+
+Used to populate a dropdown of organizations for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one organization in the `orgs` table:
+```
+[
+  {
+    "id": 1,
+    "name": "Organization One"
+  },
+  {
+    "id": 2,
+    "name": "Organization Two"
+  },
+  {
+    "id": 3,
+    "name": "Organization Three"
+  }
+]
+```
+
+### /public/roles
+Used to populate a dropdown of roles for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one role in the `roles` table:
+```
+[
+  {
+    "id": 1,
+    "name": "School Administrator"
+  },
+  {
+    "id": 2,
+    "name": "Board Member"
+  }
+]
+```
+
+### /public/issue-status
+Used to populate a dropdown of issue statuses for forms used to create or edit issues. If successful, will return a '200' HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
+```
+[
+  {
+    "id": 1,
+    "name": "Done"
+  },
+  {
+    "id": 2,
+    "name": "Scheduled"
+  },
+  {
+    "id": 3,
+    "name": "Open"
+  },
+  {
+    "id": 4,
+    "name": "Ignored"
+  }
+]
 ```

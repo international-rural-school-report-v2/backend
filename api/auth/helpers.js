@@ -19,7 +19,7 @@ async function genToken(user, org_roles) {
   const opt = {
     expiresIn: '7d',
   }
-  return jwt.sign(pyld, jwtSecret)
+  return jwt.sign(pyld, jwtSecret, opt);
 }
 
 function grabOrgRoles(id) {
