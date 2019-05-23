@@ -50,6 +50,8 @@ If successful, will return with a '201' HTTP status and an object with this form
         - `role_id`: An integer representing the ID of the role from the `roles` table
         - `role_name`: A string representing the name of that role
 
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+
 ### /auth/register POST
 
 Expects an object with this format:
@@ -90,6 +92,8 @@ If successful, will return with a '201' HTTP status and an object with this form
         - `role_id`: An integer representing the ID of the role from the `roles` table
         - `role_name`: A string representing the name of that role
 
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+
 ### /public/orgs GET
 
 Used to populate a dropdown of organizations for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one organization in the `orgs` table:
@@ -112,6 +116,8 @@ Used to populate a dropdown of organizations for the register form. If successfu
 - `id`: An integer representing the ID of the organization in the `orgs` table
 - `name`: A string representing the organization's name
 
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+
 ### /public/roles GET
 Used to populate a dropdown of roles for the register form. If successful, will return a '200' HTTP status and an array of objects. Each object represents one role in the `roles` table:
 ```
@@ -128,6 +134,8 @@ Used to populate a dropdown of roles for the register form. If successful, will 
 ```
 - `id`: An integer representing the ID of the role in the `roles` table
 - `name`: A string representing the name of that role
+
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /public/issue-status GET
 Used to populate a dropdown of issue statuses for forms used to create or edit issues. If successful, will return a '200' HTTP status and an array of objects. Each object represents one status type in the `issue_status` table:
@@ -153,6 +161,8 @@ Used to populate a dropdown of issue statuses for forms used to create or edit i
 ```
 - `id`: An integer representing the ID of the status in the `issue_status` table
 - `name`: A string representing the name of that status
+
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues GET
 
@@ -197,6 +207,8 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 - `created_at`: A timestamp representing the time at which the issue was created
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
+
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues POST
 
@@ -244,6 +256,8 @@ If successful, will return a '200' HTTP status and an array of objects. Each obj
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+
 ### /issues/:id GET
 
 Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an object. The object represents the issue with the ID specified in the path:
@@ -272,6 +286,8 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 - `created_at`: A timestamp representing the time at which the issue was created
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
+
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
 
 ### /issues/:id PUT
 
@@ -319,6 +335,8 @@ If successful, will return a '200' HTTP status and an array of objects. Each obj
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+
 ### /issues/:id DELETE
 
 Requires `authorization` header w/ JWT.
@@ -365,6 +383,8 @@ If successful, will return a '200' HTTP status and an array of objects. Each obj
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
 
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
+
 ### /issues/org/:org_id GET
 
 Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at the organization specified in the path:
@@ -408,3 +428,5 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 - `created_at`: A timestamp representing the time at which the issue was created
 - `updated_by`: A string representing the username of the user who last updated the issue (populated via foreign key reference to the `users` table)
 - `updated_at`: A timestamp representing the time at which the issue was last updated
+
+[Top of section](#api) | [Top of page](#international-rural-school-report-backend)
