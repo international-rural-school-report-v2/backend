@@ -212,9 +212,15 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 
 ### /issues POST
 
-Requires `authorization` header w/ JWT.
-
-If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+Requires `authorization` header w/ JWT. Expects an object with this format:
+```
+{
+  "name": "User1",                // required/string
+  "status_id": 1,                 // required/integer
+  "comments": "Description here" // optional/string
+}
+```
+If successful, will return a '201' HTTP status and an array of objects. Each object represents one issue (including the one just created) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {
@@ -291,9 +297,15 @@ Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP 
 
 ### /issues/:id PUT
 
-Requires `authorization` header w/ JWT.
-
-If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+Requires `authorization` header w/ JWT. Expects an object with this format:
+```
+{
+  "name": "User1",               // optional/string
+  "status_id": 1,                // optional/integer
+  "comments": "Description here" // optional/string
+}
+```
+If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue (including the one just edited) at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {
@@ -339,9 +351,7 @@ If successful, will return a '200' HTTP status and an array of objects. Each obj
 
 ### /issues/:id DELETE
 
-Requires `authorization` header w/ JWT.
-
-If successful, will return a '200' HTTP status and an array of objects. Each object represents one issue at one of the organizations that the user belongs to (checked against org_roles stored on the token):
+Requires `authorization` header w/ JWT. If successful, will return a '200' HTTP status and an array of objects. Each object represents one of the remaining issues at one of the organizations that the user belongs to (checked against org_roles stored on the token):
 ```
 [
   {

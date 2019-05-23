@@ -28,7 +28,7 @@ router.post('/', stripIssueBody()(), reqFields(reqPostIssue), onlyRoles([1]), (r
   const { body, user_id, org_id } = req;
   return db.postIssue(body, user_id, org_id)
     .then(issues => {
-      res.status(200).json(issues);
+      res.status(201).json(issues);
     })
     .catch(err => {
       res.status(500).json({ error: 'Could not create the new issue' })
