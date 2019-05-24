@@ -44,6 +44,9 @@ async function orgCheckIssue(req, res, next) {
   const {id} = req.params;
   const {org_id} = req;
   const issue = await Issues.getIssueByID(id);
+  if(!issue) {
+    return res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` })
+  }
   issue.org_id !== org_id
     ? res.status(403).json({ error: `You are not permitted to make this request on the issue with ID ${id}` })
     : next();

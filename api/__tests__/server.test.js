@@ -209,8 +209,8 @@ describe('server', () => {
         .set({ Authorization: user1 })
         .send(issue);
         
-      it('should return status 200', () => {
-        return postIssue.expect(200);
+      it('should return status 201', () => {
+        return postIssue.expect(201);
       })
       
       it('should return an array', () => {

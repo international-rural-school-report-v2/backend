@@ -28,7 +28,7 @@ router.post('/', stripIssueBody()(), reqFields(reqPostIssue), onlyRoles([1]), (r
   const { body, user_id, org_id } = req;
   return db.postIssue(body, user_id, org_id)
     .then(issues => {
-      res.status(200).json(issues);
+      res.status(201).json(issues);
     })
     .catch(err => {
       res.status(500).json({ error: 'Could not create the new issue' })
@@ -73,9 +73,7 @@ router.delete('/:id', statusPrevent([1, 4]), orgCheckIssue, (req, res) => {
     .then(issues => {
       Array.isArray(issues)
         ? res.status(200).json(issues)
-        : !!issues
-          ? res.status(200).json({ message: `The item with ID ${id} was successfully deleted, but no more issues exist for you` })
-          : res.status(404).json({ error: `An issue with ID ${id} does not exist in our database` })
+        : res.status(200).json({ message: `The item with ID ${id} was successfully deleted, but no more issues exist for you` })
     })
     .catch(err => {
       res.status(500).json({ error: `Could not edit the issue with ID ${id}` })
